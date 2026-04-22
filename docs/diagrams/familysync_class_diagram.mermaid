@@ -1,83 +1,41 @@
-
-
 classDiagram
-direction TB
+    direction TB
 
-%% =====================
-%% Core Domain
-%% =====================
+    class User {
+        +UUID id
+        +String name
+        +String email
+    }
 
-class User {
-+String id
-+String name
-+String email
-+String passwordHash
-+String role
-+Date createdAt
+    class Family {
+        +UUID id
+        +String name
+    }
 
-+joinFamily()
-+leaveFamily()
-}
+    class Membership {
+        +UUID userId
+        +UUID familyId
+        +String role
+        +Date joinedAt
+    }
 
-class Family {
-+String id
-+String name
-+Date createdAt
+    class List {
+        +UUID id
+        +UUID familyId
+        +String title
+        +Date createdAt
+    }
 
-+addMember()
-+removeMember()
-}
+    class ListItem {
+        +UUID id
+        +UUID listId
+        +String content
+        +boolean completed
+        +Date createdAt
+    }
 
-class FamilyMember {
-+String id
-+String role
-+Date joinedAt
-}
+    User "1" -- "*" Membership
+    Family "1" -- "*" Membership
 
-%% =====================
-%% Features
-%% =====================
-
-class Event {
-+String id
-+String title
-+String description
-+Date startDate
-+Date endDate
-
-+updateEvent()
-}
-
-class Task {
-+String id
-+String title
-+String description
-+boolean completed
-+Date dueDate
-
-+markComplete()
-}
-
-class Message {
-+String id
-+String content
-+Date createdAt
-
-+editMessage()
-}
-
-%% =====================
-%% Relationships
-%% =====================
-
-User "1" --> "0..*" FamilyMember : belongsTo
-Family "1" --> "0..*" FamilyMember : has
-
-Family "1" --> "0..*" Event
-Family "1" --> "0..*" Task
-Family "1" --> "0..*" Message
-
-User "1" --> "0..*" Event : creates
-User "1" --> "0..*" Task : assignedTo
-User "1" --> "0..*" Message : sends
-
+    Family "1" -- "*" List
+    List "1" -- "*" ListItem
