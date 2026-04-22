@@ -1,0 +1,83 @@
+
+
+classDiagram
+direction TB
+
+%% =====================
+%% Core Domain
+%% =====================
+
+class User {
++String id
++String name
++String email
++String passwordHash
++String role
++Date createdAt
+
++joinFamily()
++leaveFamily()
+}
+
+class Family {
++String id
++String name
++Date createdAt
+
++addMember()
++removeMember()
+}
+
+class FamilyMember {
++String id
++String role
++Date joinedAt
+}
+
+%% =====================
+%% Features
+%% =====================
+
+class Event {
++String id
++String title
++String description
++Date startDate
++Date endDate
+
++updateEvent()
+}
+
+class Task {
++String id
++String title
++String description
++boolean completed
++Date dueDate
+
++markComplete()
+}
+
+class Message {
++String id
++String content
++Date createdAt
+
++editMessage()
+}
+
+%% =====================
+%% Relationships
+%% =====================
+
+User "1" --> "0..*" FamilyMember : belongsTo
+Family "1" --> "0..*" FamilyMember : has
+
+Family "1" --> "0..*" Event
+Family "1" --> "0..*" Task
+Family "1" --> "0..*" Message
+
+User "1" --> "0..*" Event : creates
+User "1" --> "0..*" Task : assignedTo
+User "1" --> "0..*" Message : sends
+
