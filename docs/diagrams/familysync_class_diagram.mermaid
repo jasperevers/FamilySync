@@ -1,0 +1,41 @@
+classDiagram
+    direction TB
+
+    class User {
+        +UUID id
+        +String name
+        +String email
+    }
+
+    class Family {
+        +UUID id
+        +String name
+    }
+
+    class Membership {
+        +UUID userId
+        +UUID familyId
+        +String role
+        +Date joinedAt
+    }
+
+    class List {
+        +UUID id
+        +UUID familyId
+        +String title
+        +Date createdAt
+    }
+
+    class ListItem {
+        +UUID id
+        +UUID listId
+        +String content
+        +boolean completed
+        +Date createdAt
+    }
+
+    User "1" -- "*" Membership
+    Family "1" -- "*" Membership
+
+    Family "1" -- "*" List
+    List "1" -- "*" ListItem
